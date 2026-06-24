@@ -12,13 +12,18 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'E-mail é obrigatório'],
       unique: true,
-      lowercase: true,
       trim: true,
-      match: [/^\S+@\S+\.\S+$/, 'E-mail inválido'],
     },
     active: {
       type: Boolean,
-      default: true,
+      default: false,
+    },
+    password: {
+      type: String,
+      required: true
+    },
+    codigo: {
+      type: String
     },
   },
   {

@@ -1,0 +1,104 @@
+<%- include('includes/header') %>
+
+<div class="container-contact">
+
+    <h1 class="contact-title">
+        Meus Contatos
+    </h1>
+
+    <%- include('includes/flash_msg') %>
+
+    <div
+        style="
+            display:flex;
+            justify-content: center;
+            margin-bottom:20px;
+        "
+    >
+        <a
+            href="/contacts/create"
+            class="btn-submit"
+            style="
+                width:auto;
+                text-decoration:none;
+                padding:12px 20px;
+            "
+        >
+            + Novo Contato
+        </a>
+    </div>
+
+    <% if (contacts.length > 0) { %>
+
+        <table class="contacts-table">
+
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>E-mail</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <% for(let contact of contacts) { %>
+
+                    <tr>
+
+                        <td>
+                            <%= contact.nome %>
+                        </td>
+
+                        <td>
+                            <%= contact.telefone %>
+                        </td>
+
+                        <td>
+                            <%= contact.email || '-' %>
+                        </td>
+
+                        <td>
+
+                            <a
+                                href="/contacts/edit/<%= contact._id %>"
+                                class="btn-edit"
+                            >
+                                Editar
+                            </a>
+
+                            <a
+                                href="/contacts/delete/<%= contact._id %>"
+                                class="btn-delete"
+                            >
+                                Excluir
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                <% } %>
+
+            </tbody>
+
+        </table>
+
+    <% } else { %>
+
+        <p
+            style="
+                text-align:center;
+                color:#6b7280;
+                font-size:1.1rem;
+            "
+        >
+            Você ainda não possui contatos cadastrados.
+        </p>
+
+    <% } %>
+
+</div>
+
+<%- include('includes/footer') %>

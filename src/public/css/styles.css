@@ -1,0 +1,310 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+  
+  body {
+  background-color: #f4f7fb;
+  font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .container {
+  display: flex;
+  justify-self: center;
+  margin-top: 30px;
+  padding: 20px;
+  flex-direction: column;
+  background-color: blue;
+  justify-content: center;
+  color: white;
+  
+  }
+  
+  .header {
+  background: #1e3a8a;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  padding: 0 40px;
+  
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  
+  }
+  
+  .logo a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-weight: 700;
+  
+  letter-spacing: 3px;
+  
+  }
+  
+  .btn-login {
+  text-decoration: none;
+  color: #1e3a8a;
+  background: #fff;
+  
+  padding: 10px 20px;
+  border-radius: 8px;
+  
+  font-weight: 600;
+  
+  transition: all 0.3s ease;
+  
+  }
+  
+  .btn-login:hover {
+  background: #dbeafe;
+  transform: translateY(-2px);
+  }
+  
+  .login-container,
+  .register-container {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  padding: 30px;
+  
+  }
+  
+  .login-card,
+  .register-card {
+  width: 100%;
+  max-width: 450px;
+  background: white;
+  padding: 40px;
+  
+  border-radius: 15px;
+  
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  
+  }
+  
+  .login-card h1,
+  .register-card h1 {
+  color: #1e3a8a;
+  text-align: center;
+  margin-bottom: 30px;
+  }
+  
+  .input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  }
+  
+  .input-group label {
+  color: #1e3a8a;
+  font-weight: 600;
+  margin-bottom: 8px;
+  
+  }
+  
+  .input-group input {
+  padding: 12px;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  
+  font-size: 1rem;
+  
+  outline: none;
+  transition: 0.3s;
+  
+  }
+  
+  .input-group input:focus {
+  border-color: #1e3a8a;
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
+  }
+  
+  .btn-submit {
+  width: 100%;
+  padding: 12px;
+  
+  border: none;
+  border-radius: 8px;
+  
+  background: #1e3a8a;
+  color: white;
+  
+  font-size: 1rem;
+  font-weight: bold;
+  
+  cursor: pointer;
+  transition: 0.3s;
+  
+  }
+  
+  .btn-submit:hover {
+  background: #16306f;
+  }
+  
+  .register-text {
+  text-align: center;
+  margin-top: 20px;
+  }
+  
+  .register-text a {
+  color: #1e3a8a;
+  text-decoration: none;
+  font-weight: bold;
+  }
+  
+  .register-text a:hover {
+  text-decoration: underline;
+  }
+  
+  footer {
+  width: 100%;
+  height: 50px;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  color: #1e3a8a;
+  
+  }
+
+.password-rules {
+    margin-top: 15px;
+}
+
+.password-rules p {
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.invalid {
+    color: #dc2626;
+}
+
+.valid {
+    color: #16a34a;
+}
+
+.confirm {
+    margin-top: 15px;
+}
+
+.user-greeting {
+    color: white;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.container-contact {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 30px auto;
+    padding: 30px;
+
+    min-height: calc(100vh - 140px);
+
+    background: #ffffff;
+
+    border-radius: 15px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.contact-title {
+    text-align: center;
+
+    color: #1e3a8a;
+
+    font-size: 2rem;
+    font-weight: bold;
+
+    margin-bottom: 30px;
+
+    padding-bottom: 15px;
+
+    border-bottom: 2px solid #dbeafe;
+}
+
+/* TABELA DE CONTATOS */
+
+.contacts-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.contacts-table th {
+    background: #1e3a8a;
+    color: white;
+
+    padding: 15px;
+
+    text-align: center;
+
+    font-weight: bold;
+}
+
+.contacts-table td {
+    padding: 15px;
+
+    text-align: center;
+
+    color: #374151;
+}
+
+.contacts-table tr {
+    border-bottom: 1px solid #dbeafe;
+}
+
+.contacts-table tbody tr:hover {
+    background: #f8fafc;
+    transition: 0.2s;
+}
+
+/* LINKS DE AÇÃO */
+
+.btn-edit {
+    display: inline-block;
+
+    padding: 8px 14px;
+
+    background: #1e3a8a;
+    color: white;
+
+    border-radius: 6px;
+
+    text-decoration: none;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.btn-edit:hover {
+    background: #16306f;
+}
+
+.btn-delete {
+    display: inline-block;
+
+    padding: 8px 14px;
+
+    background: #dc2626;
+    color: white;
+
+    border-radius: 6px;
+
+    text-decoration: none;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.btn-delete:hover {
+    background: #b91c1c;
+}

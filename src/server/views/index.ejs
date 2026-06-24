@@ -1,0 +1,108 @@
+<%- include('includes/header') %>
+
+<div class="container-contact">
+
+    <% if (user) { %>
+
+        <h1 class="contact-title">
+            Bem-vindo, <%= user.name.trim().split(' ')[0].charAt(0).toUpperCase() + user.name.trim().split(' ')[0].slice(1).toLowerCase() %>!
+        </h1>
+
+        <div class="container">
+            <h2>Sua agenda está pronta</h2>
+
+            <p style="margin-top: 10px;">
+                Gerencie seus contatos de forma simples e organizada.
+            </p>
+
+            <div style="margin-top: 20px;">
+                <a
+                    href="/contacts"
+                    class="btn-login"
+                    style="
+                        display:inline-block;
+                        text-decoration:none;
+                    "
+                >
+                    Ver meus contatos
+                </a>
+            </div>
+        </div>
+
+    <% } else { %>
+
+        <h1 class="contact-title">
+            Bem-vindo ao Agenda
+        </h1>
+
+        <div
+            style="
+                text-align:center;
+                max-width:700px;
+                margin:0 auto;
+            "
+        >
+            <p
+                style="
+                    font-size:1.1rem;
+                    margin-bottom:20px;
+                    color:#374151;
+                "
+            >
+                Organize seus contatos em um único lugar.
+            </p>
+
+            <p
+                style="
+                    margin-bottom:30px;
+                    color:#6b7280;
+                "
+            >
+                Cadastre pessoas, mantenha telefones atualizados e acesse
+                suas informações sempre que precisar.
+            </p>
+
+            <a
+                href="/register"
+                class="btn-submit"
+                style="
+                    text-decoration:none;
+                    display:inline-block;
+                    width:auto;
+                    padding:12px 24px;
+                "
+            >
+                Criar Conta Gratuitamente
+            </a>
+
+            <div
+                style="
+                    margin-top:40px;
+                    display:flex;
+                    justify-content:center;
+                    gap:30px;
+                    flex-wrap:wrap;
+                "
+            >
+                <div>
+                    <h3 style="color:#1e3a8a;">📞 Contatos</h3>
+                    <p>Cadastre e organize seus contatos.</p>
+                </div>
+
+                <div>
+                    <h3 style="color:#1e3a8a;">🔒 Segurança</h3>
+                    <p>Contas protegidas com autenticação.</p>
+                </div>
+
+                <div>
+                    <h3 style="color:#1e3a8a;">☁️ Acesso</h3>
+                    <p>Seus dados disponíveis online.</p>
+                </div>
+            </div>
+        </div>
+
+    <% } %>
+
+</div>
+
+<%- include('includes/footer') %>

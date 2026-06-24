@@ -9,7 +9,7 @@ const startServer = async () => {
   await connectDatabase();
 
   app.listen(config.port, () => {
-    console.log(`Servidor rodando na porta ${config.port} (${config.nodeEnv})`);
+    console.log(`Servidor rodando em http://localhost:${config.port}`);
   });
 };
 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title><%- titulo %></title>
+    <link rel="stylesheet" href="/css/styles.css" type="text/css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="/">AGENDA</a>
+        </div>
+    
+        <div>
+            <% if (user) { %>
+                <span class="user-greeting">
+                    Olá, <%= user.name.split(' ')[0].charAt(0).toUpperCase() + user.name.trim().split(' ')[0].slice(1).toLowerCase() %>
+                </span>
+        
+                <a href="/logout" class="btn-login">
+                    Sair
+                </a>
+            <% } else { %>
+                <a href="/login" class="btn-login">
+                    Login
+                </a>
+            <% } %>
+        </div>
+</header>
