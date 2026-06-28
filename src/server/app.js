@@ -21,7 +21,7 @@ app.set('views', path.resolve(__dirname, 'views'))
   app.use(express.static(path.resolve(__dirname, '../public')))
   // Sessions
 app.use(session({
-  secret: process.env.secret,
+  secret: config.secret,
   resave: false,
   saveUninitialized: false,
   cookie: {

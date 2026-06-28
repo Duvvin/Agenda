@@ -16,4 +16,5 @@ module.exports = {
   mongodbUri: process.env.MONGODB_URI,
   isDevelopment: (process.env.NODE_ENV || 'development') === 'development',
   isProduction: process.env.NODE_ENV === 'production',
+  secret: process.env.SECRET
 };
