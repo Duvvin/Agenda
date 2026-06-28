@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
@@ -10,13 +9,13 @@ module.exports = (_env, argv) => {
 
   return {
     entry: {
-      main: path.resolve(__dirname, 'src/client/js/main.js'),
-      styles: path.resolve(__dirname, 'src/client/css/main.css'),
+      main: path.resolve(__dirname, 'src/public/js/passIsStrong.js'),
+      styles: path.resolve(__dirname, 'src/public/css/styles.css'),
     },
     output: {
-      path: path.resolve(__dirname, 'dist'),
-      filename: isProduction ? 'js/[name].[contenthash].js' : 'js/[name].js',
-      clean: true,
+        path: path.resolve(__dirname, 'src/public/build'),
+        filename: 'js/[name].js',
+        clean: true,
       publicPath: '/',
     },
     devtool: isProduction ? 'source-map' : 'eval-source-map',
@@ -43,10 +42,9 @@ module.exports = (_env, argv) => {
       ],
     },
     plugins: [
-      new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, 'src/client/index.html'),
-        filename: 'index.html',
-      }),
+        new MiniCssExtractPlugin({
+          filename: 'css/styles.css'
+        }),
       ...(isProduction
         ? [new MiniCssExtractPlugin({ filename: 'css/[name].[contenthash].css' })]
         : []),
