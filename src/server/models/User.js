@@ -25,6 +25,9 @@ const userSchema = new mongoose.Schema(
     codigo: {
       type: String
     },
+    codigoExpiraEm: {
+      type: String
+    }
   },
   {
     timestamps: true,

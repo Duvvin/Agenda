@@ -68,7 +68,46 @@ exports.deleteContact = async (req, res) => {
 
 // Página de edição de contatos
 exports.editContact = async (req, res) => {
-    const contact = Contact.findById(req.params.id)
+    const contact = await Contact.findById(req.params.id);
 
-    res.render('')
+    if (!contact) {
+        req.flash('error_msg', 'Contato não encontrado.');
+        return res.redirect('/contacts');
+    }
+
+    if (contact.userId.toString() !== req.session.user.id) {
+        req.flash('error_msg', 'Acesso negado');
+        return res.redirect('/contacts');
+    }
+
+    res.render('editContact', {
+        titulo: 'Editar Contato',
+        contact
+    });
+}
+
+// Rota de Salvar a edição dos contatos
+exports.saveContact = async (req, res) => {
+    const { nome, telefone, email } = req.body
+
+    const contact = await Contact.findById(req.params.id)
+
+    if(!contact) {
+        req.flash('error_msg', 'Contato não encontrado')
+        return res.redirect('/contacts')
+    }
+
+    if(contact.userId.toString() !== req.session.user.id) {
+        req.flash('error_msg', 'Acesso negado');
+        return res.redirect('/contacts')
+    }
+
+    contact.nome = nome
+    contact.email = email
+    contact.telefone = telefone
+    
+    await contact.save()
+
+    req.flash('success_msg', 'Contato atualizado com sucesso')
+    res.redirect('/contacts');
 }

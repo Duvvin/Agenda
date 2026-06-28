@@ -37,11 +37,45 @@
 
         <p class="register-text">
             Não recebeu o código?
-            <a href="/register/resend-code">
+            <a id="resendLink" href="/register/resend-code">
                 Reenviar código
             </a>
         </p>
     </div>
 </div>
+
+<script>
+    const link = document.getElementById('resendLink');
+
+    let remaining = Number("<%= remaining %>");
+
+    if (remaining > 0) {
+
+        link.style.pointerEvents = 'none';
+        link.style.opacity = '0.5';
+
+        const updateTimer = () => {
+            link.textContent = `Reenviar código (${remaining}s)`;
+        };
+
+        updateTimer();
+
+        const interval = setInterval(() => {
+
+            remaining--;
+
+            updateTimer();
+
+            if (remaining <= 0) {
+                clearInterval(interval);
+
+                link.style.pointerEvents = 'auto';
+                link.style.opacity = '1';
+                link.textContent = 'Reenviar código';
+            }
+
+        }, 1000);
+    }
+</script>
 
 <%- include('includes/footer') %>

@@ -1,9 +1,9 @@
 const express = require('express');
 const route = express.Router();
 const { homePage } = require('./controllers/homeController')
-const { loginPage, registerPage, userRegister, userLogin, verifyEmail, verifyEmailPage, logOut } = require('./controllers/userController')
+const { loginPage, registerPage, userRegister, userLogin, verifyEmail, verifyEmailPage, logOut, resendCode } = require('./controllers/userController')
 const { loginRequired } = require('./middleware/loginRequired')
-const { contactPage, createContactPage, createContact, deleteContact, editContact } = require('./controllers/contactController')
+const { contactPage, createContactPage, createContact, deleteContact, editContact, saveContact } = require('./controllers/contactController')
 
 // Pagina Inicial
 route.get('/', homePage)
@@ -30,6 +30,9 @@ route.get('/', homePage)
     // Rota de Logout
     route.get('/logout', loginRequired, logOut)
 
+    // Rota para reenviar codigo no email
+    route.get('/register/resend-code', loginRequired, resendCode)
+
 
 // Rotas de Contatos
     // Pagina de Contatos
@@ -47,5 +50,7 @@ route.get('/', homePage)
     // Página de edição de contato
     route.get('/contacts/edit/:id', loginRequired, editContact)
 
+    // Rota para salvar a edição do contato
+    route.post('/contacts/edit/:id', loginRequired, saveContact)
 
 module.exports = route

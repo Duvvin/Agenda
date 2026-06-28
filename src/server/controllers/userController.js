@@ -2,6 +2,8 @@ const validator = require('validator')
 const bcrypt = require('bcrypt')
 const User = require('../models/User')
 const nodemailer = require('nodemailer')
+const path = require('path')
+const ejs = require('ejs')
 
 // Transporter NodeMailer
 const transporter = nodemailer.createTransport({
@@ -12,12 +14,20 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-async function sendCode(email, codigo) {
+async function sendCode(name, email, codigo) {
+    const html = await ejs.renderFile(
+        path.join(__dirname, '../views/emailNodeMailer.ejs'),
+        {
+            name,
+            code: codigo
+        }
+    )
+
     await transporter.sendMail({
         from: process.env.EMAIL_BUSINESS,
         to: email,
         subject: 'Código de verificação Agenda',
-        text: `Seu código é: ${codigo}`
+        html
     })
 };
 
@@ -80,13 +90,12 @@ exports.userRegister = async (req, res) => {
                 res.redirect("/register")
             } else {
                 const codigo = genCode();
-                sendCode(email, codigo)
+                sendCode(nome, email, codigo)
                 const newUser = new User({
                     name: nome,
                     email: email,
                     password: senha,
                     codigo: codigo,
-                    ativo: false
                 })
 
                 bcrypt.genSalt(10, (erro, salt) => {
@@ -99,10 +108,22 @@ exports.userRegister = async (req, res) => {
                             newUser.password = hash
 
                             newUser.save().then((savedUser) => {
-                                req.session.userIdVerificacao = savedUser._id
-                                console.log('Id Usuario' + savedUser._id)
-                                console.log('ID Salvo:' + req.session.userIdVerificacao)
-                                return res.redirect('/verifyEmailPage')
+                                req.session.user = {
+                                    id: savedUser._id.toString(),
+                                    name: savedUser.name,
+                                    email: savedUser.email
+                                }
+
+                                req.session.lastCodeSent = Date.now()
+
+                                console.log('Antes do save:')
+                                console.log(req.session)
+                                
+                                req.session.save(() => {
+                                    console.log('Depois do Save')
+                                    console.log(req.session)
+                                    return res.redirect('/verifyEmailPage')
+                                })
                             })
                         })
                 })
@@ -115,8 +136,25 @@ exports.userRegister = async (req, res) => {
 }
 
 exports.verifyEmailPage = async (req, res) => {
+
+    console.log('Sessão na pagina:')
+    console.log(req.session)
+
+    let remaining = 0;
+
+    if(req.session.lastCodeSent) {
+        const elapsed = Math.floor(
+            (Date.now() - req.session.lastCodeSent) / 1000
+        );
+
+        remaining = Math.max(0, 60 - elapsed)
+    }
+
+    console.log("Remaining:", remaining);
+
     res.render('verificarEmail', {
-        titulo: 'Verificar Email'
+        titulo: 'Verificar Email',
+        remaining
     })
 }
 
@@ -125,7 +163,7 @@ exports.verifyEmail = async (req, res) => {
     const { codigo } = req.body
 
     const user = await User.findById(
-        req.session.userIdVerificacao
+        req.session.user.id
     );
 
     if(!user) {
@@ -177,6 +215,11 @@ exports.userLogin = async (req, res) => {
         email: user.email
     };
 
+    if(user.active !== true) {
+        req.flash('error_msg', 'Você precisa verificar seu email')
+        return res.redirect('/verifyEmailPage')
+    }
+
     console.log('Usuario salvo na sessão: ')
     console.log(req.session.user)
 
@@ -196,4 +239,42 @@ exports.logOut = (req, res) => {
 
         res.redirect('/login')
     })
+}
+
+exports.resendCode = async (req, res) => {
+    const now = Date.now();
+
+    if (
+        req.session.lastCodeSent &&
+        now - req.session.lastCodeSent < 60000
+    ) {
+        req.flash(
+            'error_msg',
+            'Aguarde 60 segundos para solicitar um novo código.'
+        );
+
+        return res.redirect('/verifyEmailPage');
+    }
+
+    const user = await User.findById(req.session.user.id);
+
+    if (!user) {
+        req.flash('error_msg', 'Voce precisa fazer login')
+        return res.redirect('/login');
+    }
+
+    const codigo = genCode()
+
+    user.codigo = codigo;
+    user.codigoExpiraEm = new Date(Date.now() + 10 * 60 * 1000);
+
+    await user.save();
+
+    await sendCode(user.name, user.email, codigo);
+
+    req.session.lastCodeSent = Date.now();
+
+    req.flash('success_msg', 'Novo código enviado com sucesso.');
+
+    return res.redirect('/verifyEmailPage');
 }
