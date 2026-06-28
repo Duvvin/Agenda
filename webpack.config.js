@@ -13,10 +13,10 @@ module.exports = (_env, argv) => {
       styles: path.resolve(__dirname, 'src/public/css/styles.css'),
     },
     output: {
-        path: path.resolve(__dirname, 'src/public/build'),
-        filename: 'js/[name].js',
-        clean: true,
-      publicPath: '/',
+      path: path.resolve(__dirname, 'src/public/build'),
+      filename: 'js/[name].js',
+      clean: true,
+      publicPath: '/build/',
     },
     devtool: isProduction ? 'source-map' : 'eval-source-map',
     module: {
