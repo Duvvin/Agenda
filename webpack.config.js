@@ -10,7 +10,6 @@ module.exports = (_env, argv) => {
   return {
     entry: {
       main: path.resolve(__dirname, 'src/public/js/passIsStrong.js'),
-      styles: path.resolve(__dirname, 'src/public/css/styles.css'),
     },
     output: {
       path: path.resolve(__dirname, 'src/public/build'),
