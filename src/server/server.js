@@ -2,6 +2,8 @@ const config = require('./config/env');
 const connectDatabase = require('./config/database');
 const app = require('./app');
 
+console.log(process.env.MONGODB_URI);
+
 const startServer = async () => {
   await connectDatabase();
 
